@@ -1,1 +1,16 @@
+const http = require('http');
+const express = require('express');
+
+const app = express();
+
 const PORT = process.arg.env.PORT || 8000;
+
+const server = http.createServer(app);
+
+server.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}...`);
+});
+
+
+
+

@@ -1,11 +1,15 @@
 {
-  "name": "8-nodejs-nasa-project",
+  "name": "nasa-project",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "nodemon src/server.js",
-    "start": "node src/server.js"
+    "install-server": "npm install --prefix 'BackEnd - Server - MVC'",
+    "install-client": "npm install --prefix 'FrontEnd - Client'",
+    "install": "npm run install-server && npm run install-client",
+    "server": "npm run watch --prefix 'BackEnd - Server - MVC'",
+    "client": "npm start --prefix 'FrontEnd - Client'",
+    "watch": "npm run server & npm run client",
+    "test": "npm run test --prefix 'BackEnd - Server - MVC' & npm run test --prefix 'FrontEnd - Client'"
   },
   "author": "",
   "license": "ISC",

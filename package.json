@@ -9,6 +9,7 @@
     "server": "npm run watch --prefix 'BackEnd - Server - MVC'",
     "client": "npm start --prefix 'FrontEnd - Client'",
     "watch": "npm run server & npm run client",
+    "deploy": "npm run build --prefix 'FrontEnd - Client' && npm start --prefix 'BackEnd - Server - MVC'",
     "test": "npm run test --prefix 'BackEnd - Server - MVC' & npm run test --prefix 'FrontEnd - Client'"
   },
   "author": "",

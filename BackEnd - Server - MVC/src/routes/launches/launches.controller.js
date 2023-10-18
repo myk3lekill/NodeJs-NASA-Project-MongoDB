@@ -1,9 +1,9 @@
-const { launches } = require('../../models/launches.model');//We have to Destructure launches from module.export object to run
+const { getAllLaunches } = require('../../models/launches.model');//We have to Destructure launches from module.export object to run
 
-function getAllLaunches(req, res) {
-   return res.status(200).json(Array.from(launches.values()));//launches.values() is an IterableIterator that isn't a valid json format. So we use Array.from() to return an array that is a json format.
+function httpGetAllLaunches(req, res) {
+   return res.status(200).json(getAllLaunches())
 };
 
 module.exports = {
-    getAllLaunches,
+    httpGetAllLaunches,
 }

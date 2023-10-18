@@ -13,6 +13,10 @@ const launch = {
 
 launches.set(launch.flightNumber, launch);
 
+function getAllLaunches() {
+    return Array.from(launches.values());//launches.values() is an IterableIterator that isn't a valid json format. So we use Array.from() to return an array that is a json format.
+}
+
 module.exports = {
-    launches,
+    getAllLaunches,
 }

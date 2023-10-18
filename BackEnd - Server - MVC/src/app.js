@@ -14,8 +14,8 @@ app.use(cors({
 app.use(morgan('combined'));//Middleware function to call morgan log manage package
 app.use(express.json());//Middleware Function
 app.use(express.static(path.join(__dirname, '..', 'public')));//Middleware function to run the react frontend build directly from server
-app.use(planetsRouter);//Middleware Function
-app.use(launchesRouter);//Middleware Function
+app.use('/planets', planetsRouter);//Middleware Function
+app.use('/launches', launchesRouter);//Middleware Function
 
 app.get('/*', (res,req) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));

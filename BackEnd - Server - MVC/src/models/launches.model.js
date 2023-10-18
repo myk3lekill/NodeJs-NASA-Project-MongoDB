@@ -1,5 +1,7 @@
 const launches = new Map();
 
+let latestFlightNumber = 100
+
 const launch = {
     flightNumber : 100,
     mission: 'Kepler Exploration X',
@@ -17,6 +19,18 @@ function getAllLaunches() {
     return Array.from(launches.values());//launches.values() is an IterableIterator that isn't a valid json format. So we use Array.from() to return an array that is a json format.
 }
 
+//Implement the Post request
+function addNewLaunch(launch) {
+    latestFlightNumber ++;
+    launches.set(latestFlightNumber, Object.assign(launch, {
+        success: true,
+        upcoming: true,
+        customers: ['Zero to Mastery', 'NASA'],
+        flightNumber: latestFlightNumber,
+    }));
+}
+
 module.exports = {
     getAllLaunches,
+    addNewLaunch,
 }

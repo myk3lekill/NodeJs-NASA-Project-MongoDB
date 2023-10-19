@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname, '..', 'public')));//Middleware funct
 app.use('/planets', planetsRouter);//Middleware Function
 app.use('/launches', launchesRouter);//Middleware Function
 
-app.get('/*', (res,req) => {
+app.get('/*', (req,res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 })
 

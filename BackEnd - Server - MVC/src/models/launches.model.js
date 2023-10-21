@@ -15,9 +15,13 @@ const launch = {
 
 launches.set(launch.flightNumber, launch);
 
+function existsLaunchWithId(launchId) {
+    return launches.has(launchId);
+};
+
 function getAllLaunches() {
     return Array.from(launches.values());//launches.values() is an IterableIterator that isn't a valid json format. So we use Array.from() to return an array that is a json format.
-}
+};
 
 //Implement the Post request
 function addNewLaunch(launch) {
@@ -28,9 +32,19 @@ function addNewLaunch(launch) {
         customers: ['Zero to Mastery', 'NASA'],
         flightNumber: latestFlightNumber,
     }));
-}
+};
+
+function abortLaunchById(launchId) {
+    //launches.delete(launchId); DELETE
+    const aborted = launches.get(launchId);
+    aborted.upcoming = false;
+    aborted.success = false;
+    return aborted
+};
 
 module.exports = {
+    existsLaunchWithId,
     getAllLaunches,
     addNewLaunch,
+    abortLaunchById,
 }

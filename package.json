@@ -10,12 +10,13 @@
     "client": "npm start --prefix 'FrontEnd - Client'",
     "watch": "npm run server & npm run client",
     "deploy": "npm run build --prefix 'FrontEnd - Client' && npm start --prefix 'BackEnd - Server - MVC'",
-    "test": "npm run test --prefix 'BackEnd - Server - MVC' & npm run test --prefix 'FrontEnd - Client'"
+    "test": "npm test --prefix 'BackEnd - Server - MVC' & npm test --prefix 'FrontEnd - Client'"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "csv-parse": "^5.5.2",
+    "just": "^0.1.8",
     "nodemon": "^3.0.1"
   },
   "description": ""

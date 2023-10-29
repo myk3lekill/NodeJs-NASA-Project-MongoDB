@@ -10,7 +10,8 @@
     "client": "npm start --prefix 'FrontEnd - Client'",
     "watch": "npm run server & npm run client",
     "deploy": "npm run build --prefix 'FrontEnd - Client' && npm start --prefix 'BackEnd - Server - MVC'",
-    "test": "npm test --prefix 'BackEnd - Server - MVC' & npm test --prefix 'FrontEnd - Client'"
+    "test": "npm test --prefix 'BackEnd - Server - MVC' & npm test --prefix 'FrontEnd - Client'",
+    "deploy-cluster": "npm run build --prefix 'FrontEnd - Client' && npm run cluster --prefix 'BackEnd - Server - MVC'"
   },
   "author": "",
   "license": "ISC",

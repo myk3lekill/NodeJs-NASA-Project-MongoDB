@@ -1,10 +1,7 @@
 const { parse } = require('csv-parse');
 const path = require('path');
 const fs = require('fs');
-//const planets = require('./planets.mongo');
-
-
-
+const planets = require('./planets.mongo');
 
 const results = [];
 const habitablePlanets = [];
@@ -26,9 +23,15 @@ return new Promise((resolve, reject) => {
             comment: '#',
             columns: true,
         }))
-        .on('data', (data) => {
+        .on('data', async(data) => {
             if (isHabitablePlanet(data)) {
-                habitablePlanets.push(data);
+                //Array Method:
+                //habitablePlanets.push(data);
+                //MongoDB Method:
+                await planets.create({ //Upsert instead of Create would avoid duplication at server launces.
+                    //We need to respect the requirements of the schema or we receive an error
+                    keplerName: data.kepler_name, //only name is required by the Schema
+                });
             }
             results.push(data);
         })
@@ -45,11 +48,11 @@ return new Promise((resolve, reject) => {
             resolve();
         });
     });
-}
+};
 
 function getAllPlanets() {
     return habitablePlanets;
-}
+};
 
  module.exports = {
     loadPlanetsData,

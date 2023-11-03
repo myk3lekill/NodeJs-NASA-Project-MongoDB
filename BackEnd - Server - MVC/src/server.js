@@ -23,7 +23,6 @@ mongoose.connection.on('error', (err) => {
 async function startServer() {
     //Connect Mongo
     await mongoose.connect(MONGO_URL, {
-
         useUnifiedTopology: true
     }); 
 

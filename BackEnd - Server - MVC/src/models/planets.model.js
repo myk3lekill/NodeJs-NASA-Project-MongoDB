@@ -25,13 +25,7 @@ return new Promise((resolve, reject) => {
         }))
         .on('data', async(data) => {
             if (isHabitablePlanet(data)) {
-                //Array Method:
-                //habitablePlanets.push(data);
-                //MongoDB Method:
-                await planets.create({ //Upsert instead of Create would avoid duplication at server launces.
-                    //We need to respect the requirements of the schema or we receive an error
-                    keplerName: data.kepler_name, //only name is required by the Schema
-                });
+                savePlanet(data);
             }
             results.push(data);
         })
@@ -39,20 +33,42 @@ return new Promise((resolve, reject) => {
             console.log(err);
             reject();
         })
-        .on('end', () => {
+        .on('end', async() => {
+            const countPlanetsFound = (await getAllPlanets()).length
             // console.log(habitablePlanets.map((planet) => {
             //     return planet['kepler_name'];
             // }));
-            console.log(`${habitablePlanets.length} habitable planets found!`);
+            console.log(`${countPlanetsFound} habitable planets found!`);
             console.log('done');
             resolve();
         });
     });
 };
 
-function getAllPlanets() {
-    return habitablePlanets;
+async function getAllPlanets() {
+    //Array Method:
+    //return habitablePlanets;
+    //Mongo Method: return a list of planets from MongoDB
+    return await planets.find({});
 };
+
+async function savePlanet(planet) {
+    //Array Method:
+    //habitablePlanets.push(data);
+    //MongoDB Method:
+    try {
+    await planets.updateOne({ //Upsert instead of Create would avoid duplication at server launces.
+        //We need to respect the requirements of the schema or we receive an error
+        keplerName: planet.kepler_name, //only name is required by the Schema. //Insert kepler planet if it doesn't exist
+    }, {
+        keplerName: planet.kepler_name // Update kepler planet if it does already exist
+    }, {
+        upsert: true //enable the upsert functionalitiy
+    });
+    } catch (err) {
+        console.error(`Could not save planet ${err}`)
+    }
+}
 
  module.exports = {
     loadPlanetsData,

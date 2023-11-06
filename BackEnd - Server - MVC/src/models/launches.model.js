@@ -23,8 +23,14 @@ function existsLaunchWithId(launchId) {
     return launches.has(launchId);
 };
 
-function getAllLaunches() {
-    return Array.from(launches.values());//launches.values() is an IterableIterator that isn't a valid json format. So we use Array.from() to return an array that is a json format.
+async function getAllLaunches() {
+    // Array getting launches method:
+    // return Array.from(launches.values());//launches.values() is an IterableIterator that isn't a valid json format. So we use Array.from() to return an array that is a json format.
+    // MongoDB getting launches method:
+    return await launchesDatabase.find({}, {
+        '_id':0,
+        '__v':0
+    })
 };
 
 //Save Launch to MongoDB

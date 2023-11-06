@@ -51,7 +51,7 @@ async function getAllPlanets() {
     //Mongo Method: return a list of planets from MongoDB
     return await planets.find({}, {
         '_id':0,
-        '--v':0
+        '__v':0
     });
 };
 

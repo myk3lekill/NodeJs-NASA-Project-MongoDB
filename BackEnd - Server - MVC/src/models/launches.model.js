@@ -1,4 +1,4 @@
-//const launches = require('./launches.mongo');
+const launchesDatabase = require('./launches.mongo');
 
 const launches = new Map();
 
@@ -14,8 +14,10 @@ const launch = {
     upcoming: true,
     success: true,
 };
-
-launches.set(launch.flightNumber, launch);
+// Array save launches method:
+// launches.set(launch.flightNumber, launch);
+// MongoDB save launches method:
+saveLaunch(launch)
 
 function existsLaunchWithId(launchId) {
     return launches.has(launchId);
@@ -24,6 +26,15 @@ function existsLaunchWithId(launchId) {
 function getAllLaunches() {
     return Array.from(launches.values());//launches.values() is an IterableIterator that isn't a valid json format. So we use Array.from() to return an array that is a json format.
 };
+
+//Save Launch to MongoDB
+async function saveLaunch() {
+    await launchesDatabase.updateOne({
+        flightNumber: launch.flightNumber,//Update if flightNumber already exixts
+    }, launch , { //inserting launch object if flightnumber doesn't exixt)
+        upsert: true //Set the upsert function
+    });
+}
 
 //Implement the Post request
 function addNewLaunch(launch) {

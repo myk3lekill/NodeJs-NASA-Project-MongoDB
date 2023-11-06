@@ -49,7 +49,10 @@ async function getAllPlanets() {
     //Array Method:
     //return habitablePlanets;
     //Mongo Method: return a list of planets from MongoDB
-    return await planets.find({});
+    return await planets.find({}, {
+        '_id':0,
+        '--v':0
+    });
 };
 
 async function savePlanet(planet) {

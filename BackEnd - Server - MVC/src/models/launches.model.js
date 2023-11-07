@@ -58,7 +58,7 @@ async function saveLaunch(launch) {
     }
 
     //Update DB
-    await launchesDatabase.updateOne({
+    await launchesDatabase.findOneAndUpdate({
         flightNumber: launch.flightNumber,//Update if flightNumber already exixts
     }, launch , { //inserting launch object if flightnumber doesn't exixt)
         upsert: true //Set the upsert function

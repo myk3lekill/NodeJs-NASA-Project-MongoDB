@@ -65,16 +65,31 @@ async function saveLaunch(launch) {
     });
 }
 
-//Implement the Post request
-function addNewLaunch(launch) {
-    latestFlightNumber ++;
-    launches.set(latestFlightNumber, Object.assign(launch, {
+//Implement the Post request with MongoDB
+async function scheduleNewLaunch(launch) {
+    //1 Increment flightNumber by 1:
+    const newFlightNumber = await getLatestFlightNumber() + 1
+    //2 Assign a few property by default to the launch Obj:
+    const newLaunch = Object.assign(launch, {
         success: true,
         upcoming: true,
         customers: ['Zero to Mastery', 'NASA'],
-        flightNumber: latestFlightNumber,
-    }));
-};
+        flightNumber: newFlightNumber
+    });
+    //3 Save scheduled launch with assigned property
+    await saveLaunch(newLaunch);
+}
+
+//Implement the Post request with Array
+// function addNewLaunch(launch) {
+//     latestFlightNumber ++;
+//     launches.set(latestFlightNumber, Object.assign(launch, {
+//         success: true,
+//         upcoming: true,
+//         customers: ['Zero to Mastery', 'NASA'],
+//         flightNumber: latestFlightNumber,
+//     }));
+// };
 
 function abortLaunchById(launchId) {
     //launches.delete(launchId); DELETE
@@ -87,6 +102,7 @@ function abortLaunchById(launchId) {
 module.exports = {
     existsLaunchWithId,
     getAllLaunches,
-    addNewLaunch,
+    //addNewLaunch,
+    scheduleNewLaunch,
     abortLaunchById,
 }

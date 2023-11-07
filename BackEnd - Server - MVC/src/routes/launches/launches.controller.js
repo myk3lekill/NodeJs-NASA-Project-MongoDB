@@ -1,10 +1,10 @@
-const { getAllLaunches, addNewLaunch, existsLaunchWithId, abortLaunchById } = require('../../models/launches.model');//We have to Destructure launches from module.export object to run
+const { getAllLaunches, scheduleNewLaunch, existsLaunchWithId, abortLaunchById } = require('../../models/launches.model');//We have to Destructure launches from module.export object to run
 
 async function httpGetAllLaunches(req, res) {
    return res.status(200).json(await getAllLaunches())
 };
 
-function httpAddNewLaunch(req, res) {
+async function httpAddNewLaunch(req, res) {
     const launch = req.body;
     //Validation for inputed data (from Postman)
     if (!launch.mission || !launch.rocket || !launch.launchDate || ! launch.target) {
@@ -18,7 +18,7 @@ function httpAddNewLaunch(req, res) {
             error: 'Invalid launch date'
         });
     }
-    addNewLaunch(launch);
+    await scheduleNewLaunch(launch);
     return res.status(201).json(launch);
 };
 

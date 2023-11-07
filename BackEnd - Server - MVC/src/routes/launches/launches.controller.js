@@ -19,13 +19,14 @@ async function httpAddNewLaunch(req, res) {
         });
     }
     await scheduleNewLaunch(launch);
-    console.log(launch);
+    //console.log(launch);
     return res.status(201).json(launch);
 };
 
-function httpAbortLaunch(req, res) {
+async function httpAbortLaunch(req, res) {
     const launchId = Number(req.params.id); //Take id of req as a Number to avoid bug
-    if(!existsLaunchWithId(launchId)) {
+    const existLaunch = await existsLaunchWithId(launchId);
+    if(!existLaunch) {
     // If launch doesn't exist 404 error
     return res.status(404).json({
         error: 'Launch not found'
@@ -33,8 +34,15 @@ function httpAbortLaunch(req, res) {
     }
 
     // If launch does exist
-    const aborted = abortLaunchById(launchId);
-    return res.status(200).json(aborted);
+    const aborted = await abortLaunchById(launchId);
+    if(!aborted) {
+        return res.status(400).json({
+            errot:'Launch not Find'
+        })
+    }
+    return res.status(200).json({
+        ok: true,
+    });
 
 };
 
